@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fiji Campus Bus & Weather Dashboard</title>
+
+<style>
+    /* -----------------------------
+       General Page Styling
+    ------------------------------*/
+    body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(to right, #4facfe, #00c6fb);
+        margin: 0;
+        padding: 20px;
+    }
+
+    h1 {
+        text-align: center;
+        color: white;
+    }
+
+    .container {
+        max-width: 700px;
+        margin: auto;
+    }
+
+    .card {
+        background: white;
+        padding: 20px;
+        margin-top: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    label {
+        font-weight: bold;
+    }
+
+    input {
+        width: 100%;
+        padding: 10px;
+        margin-top: 8px;
+        margin-bottom: 15px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+    }
+
+    button {
+        background: #0077cc;
+        color: white;
+        border: none;
+        padding: 10px 18px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    button:hover {
+        background: #005fa3;
+    }
+
+    #result {
+        margin-top: 15px;
+        font-size: 18px;
+        font-weight: bold;
+        color: #006400;
+    }
+
+    .weather-box {
+        background: #eef7ff;
+        border-left: 5px solid #0077cc;
+        padding: 15px;
+        margin-top: 10px;
+        line-height: 1.8;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Fiji Campus Bus & Weather Dashboard</h1>
+
+    <!-- ==========================
+         Bus Fare Calculator Section
+    =========================== -->
+    <div class="card">
+        <h2>Campus Bus Fare Calculator</h2>
+
+        <label for="budget">Enter Your Bus Fare Budget (FJD):</label>
+
+        <!-- Input field for the student's budget -->
+        <input
+            type="number"
+            id="budget"
+            placeholder="Example: 15"
+            min="0"
+            step="0.01">
+
+        <!-- Button to calculate rides -->
+        <button onclick="calculateRides()">
+            Calculate Bus Rides
+        </button>
+
+        <!-- Result will be displayed here -->
+        <div id="result"></div>
+    </div>
+
+    <!-- ==========================
+         Weather Information Section
+    =========================== -->
+    <div class="card">
+        <h2>Today's Weather Forecast - Nadi</h2>
+
+        <div class="weather-box">
+            <p><strong>Condition:</strong> Mostly Sunny</p>
+            <p><strong>Temperature:</strong> 30°C</p>
+            <p><strong>Humidity:</strong> 70%</p>
+            <p><strong>Chance of Rain:</strong> 20%</p>
+            <p><strong>Advice:</strong> It's a warm day—stay hydrated and wear sunscreen if you'll be outdoors.</p>
+        </div>
+    </div>
+
+</div>
+
+<script>
+/*
+====================================================
+Bus Fare Calculator
+Assumption:
+Each bus ride costs FJD $1.50
+====================================================
+*/
+
+function calculateRides() {
+
+    // Get the value entered by the user
+    let budgetInput = document.getElementById("budget").value;
+
+    // Get the result display box
+    let result = document.getElementById("result");
+
+    // Check if the input is empty or negative
+    if (budgetInput === "" || parseFloat(budgetInput) <= 0) {
+
+        // Display red error message
+        result.style.color = "red";
+        result.innerHTML = "Please enter a valid positive dollar amount.";
+
+        return;
+    }
+
+    // Convert input into a number
+    let budget = parseFloat(budgetInput);
+
+    // Cost of one bus ride
+    const fare = 1.50;
+
+    // Calculate number of bus rides
+    let rides = Math.floor(budget / fare);
+
+    // Calculate remaining money
+    let remaining = (budget - (rides * fare)).toFixed(2);
+
+    // Display successful result in green
+    result.style.color = "green";
+    result.innerHTML =
+        "You can afford <strong>" + rides + "</strong> bus ride(s).<br>" +
+        "Money left: <strong>FJD $" + remaining + "</strong>";
+}
+</script>
+
+</body>
+</html>
